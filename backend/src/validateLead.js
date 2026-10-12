@@ -1,7 +1,7 @@
 // Server-side checks for a lead. Mirrors the rules in the frontend form,
 // because the browser checks can be skipped by anyone posting directly.
 
-// Multi-select questions: each must have at least one answer from its list.
+// Single-choice questions: each needs exactly one answer from its list.
 const QUESTIONS = {
   profile: ["Business Owner", "Entrepreneur", "Working Professional", "F&B Professional", "Other"],
   capital: ["₹35L – ₹55L", "₹55L – ₹85L", "₹85L – ₹1.25Cr", "Need More Information"],
@@ -29,19 +29,6 @@ function text(value, max) {
   return typeof value === "string" ? value.trim().slice(0, max) : "";
 }
 
-// Accepts a single string or an array; keeps only allowed answers, without duplicates.
-// Returns null if any answer is not in the list, so tampered posts are rejected.
-function choices(value, allowed) {
-  const list = Array.isArray(value) ? value : value === undefined ? [] : [value];
-  const picked = [];
-  for (const item of list) {
-    const v = text(item, 80);
-    if (!allowed.includes(v)) return null;
-    if (!picked.includes(v)) picked.push(v);
-  }
-  return picked;
-}
-
 // Returns { lead } when valid, or { errors } listing the bad fields.
 function validateLead(body) {
   const input = body && typeof body === "object" ? body : {};
@@ -59,9 +46,9 @@ function validateLead(body) {
   if (!lead.city) errors.push("city");
 
   for (const key of Object.keys(QUESTIONS)) {
-    const picked = choices(input[key], QUESTIONS[key]);
-    if (!picked || picked.length === 0) errors.push(key);
-    else lead[key] = picked;
+    const answer = text(input[key], 80);
+    if (!QUESTIONS[key].includes(answer)) errors.push(key);
+    else lead[key] = answer;
   }
 
   lead.source = text(input.source, 120);
