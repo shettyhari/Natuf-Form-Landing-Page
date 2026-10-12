@@ -19,14 +19,16 @@ Leads are posted to this server at `/api/leads`.
 4. Set up Nginx with [`nginx.conf`](nginx.conf) (change the domain), then add HTTPS with Certbot.
 5. Check: `curl https://your-domain/api/health` should return `{"ok":true}`.
 
-## B. Static hosting (Vercel, Netlify, S3) for the frontend only
+## B. Vercel
 
-1. Deploy the `frontend/` folder as a static site.
-2. In `frontend/config.js` set `formEndpoint` to the full URL of a running backend,
-   e.g. `https://api.your-domain.com/api/leads`, and set `metaPixelId`.
-3. On that backend, add the static site's domain to `ALLOWED_ORIGINS` in `.env`.
+Already set up: [`vercel.json`](../vercel.json) serves `frontend/`, and [`api/leads.js`](../api/leads.js)
+handles `POST /api/leads` as a Vercel function using the same checks and storage hook as the backend.
 
-If `formEndpoint` is empty, the thank-you screen still shows but **no lead is sent**.
+1. Import the GitHub repo in Vercel. Leave Root Directory as the repo root and Framework as "Other".
+2. Set `metaPixelId` in `frontend/config.js` and push.
+3. Leads appear in Vercel → Project → Logs until the database is connected.
+
+Note: the per-IP rate limit only runs on the Node server, not on Vercel.
 
 ## Storing leads
 
