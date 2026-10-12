@@ -140,22 +140,23 @@
   }
   .field input.is-invalid, .field select.is-invalid { border-color: var(--error); }
 
-  /* Radio-style choices for the questions step */
-  .q { border: 0; margin-bottom: 20px; }
-  .q legend { font-size: 14px; font-weight: 500; margin-bottom: 10px; }
-  .q.is-invalid legend { color: var(--error); }
+  /* Multi-select choices for the questions step */
+  .q { border: 0; margin-bottom: 22px; }
+  .q legend { font-size: 14.5px; font-weight: 600; line-height: 1.35; margin-bottom: 10px; }
+  .q legend small { display: block; font-size: 12px; font-weight: 400; color: var(--muted); margin-top: 2px; }
+  .q.is-invalid legend, .q.is-invalid legend small { color: var(--error); }
+  .choices { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
   .choice {
-    display: flex; align-items: center; gap: 12px;
-    padding: 12px 14px; margin-bottom: 8px;
+    display: flex; align-items: center; gap: 10px;
+    padding: 11px 12px; min-height: 48px;
     border: 1px solid var(--line); border-radius: 10px;
-    font-size: 14.5px; cursor: pointer;
+    font-size: 13.5px; line-height: 1.3; cursor: pointer;
     transition: border-color .15s, background .15s;
   }
+  /* An odd last option spans both columns */
+  .choice:last-child:nth-child(odd) { grid-column: 1 / -1; }
   .choice input { accent-color: var(--green); width: 18px; height: 18px; flex-shrink: 0; }
   .choice:has(input:checked) { border-color: var(--green); background: var(--cream-light); }
-  .choice__text { flex: 1; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
-  .choice__text small { font-size: 12px; color: var(--muted); }
-  .choice__text em { font-style: normal; font-weight: 600; color: var(--rust); white-space: nowrap; }
 
   .error { color: var(--error); font-size: 13px; margin: -6px 0 14px; }
 
@@ -251,39 +252,60 @@
       <!-- Step 2: qualifying questions -->
       <section class="step" data-step="2" hidden>
         <h1 class="step__title">A few quick questions</h1>
-        <p class="step__intro">This helps your advisor prepare the right format and plan for you.</p>
+        <p class="step__intro">This helps your advisor prepare the right plan for you.</p>
 
         <fieldset class="q">
-          <legend>Capital contribution</legend>
-          <label class="choice"><input type="radio" name="format" value="Kiosk (100–200 sft) · ₹35L" required><span class="choice__text"><span>Kiosk<br><small>100–200 sft</small></span><em>₹35L</em></span></label>
-          <label class="choice"><input type="radio" name="format" value="Express Cafe (200–500 sft) · ₹55L"><span class="choice__text"><span>Express Cafe<br><small>200–500 sft</small></span><em>₹55L</em></span></label>
-          <label class="choice"><input type="radio" name="format" value="Flagship Cafe (500–800 sft) · ₹85L"><span class="choice__text"><span>Flagship Cafe<br><small>500–800 sft</small></span><em>₹85L</em></span></label>
-          <label class="choice"><input type="radio" name="format" value="Signature Cafe (800–1500 sft) · ₹1.25 Cr"><span class="choice__text"><span>Signature Cafe<br><small>800–1500 sft</small></span><em>₹1.25 Cr</em></span></label>
-          <label class="choice"><input type="radio" name="format" value="Not sure yet"><span class="choice__text"><span>Not sure yet, advise me</span></span></label>
+          <legend>What best describes you?<small>Select all that apply</small></legend>
+          <div class="choices">
+            <label class="choice"><input type="checkbox" name="profile" value="Business Owner">Business Owner</label>
+            <label class="choice"><input type="checkbox" name="profile" value="Entrepreneur">Entrepreneur</label>
+            <label class="choice"><input type="checkbox" name="profile" value="Working Professional">Working Professional</label>
+            <label class="choice"><input type="checkbox" name="profile" value="F&amp;B Professional">F&amp;B Professional</label>
+            <label class="choice"><input type="checkbox" name="profile" value="Other">Other</label>
+          </div>
         </fieldset>
 
-        <label class="field">
-          <span>Timeline to start</span>
-          <select name="timeline" required>
-            <option value="">Select</option>
-            <option>Immediately</option>
-            <option>Within 3 months</option>
-            <option>3–6 months</option>
-            <option>6+ months</option>
-          </select>
-        </label>
+        <fieldset class="q">
+          <legend>What capital contribution range are you considering?<small>Select all that apply</small></legend>
+          <div class="choices">
+            <label class="choice"><input type="checkbox" name="capital" value="₹35L – ₹55L">₹35L – ₹55L</label>
+            <label class="choice"><input type="checkbox" name="capital" value="₹55L – ₹85L">₹55L – ₹85L</label>
+            <label class="choice"><input type="checkbox" name="capital" value="₹85L – ₹1.25Cr">₹85L – ₹1.25Cr</label>
+            <label class="choice"><input type="checkbox" name="capital" value="Need More Information">Need More Information</label>
+          </div>
+        </fieldset>
 
-        <label class="field">
-          <span>Business background</span>
-          <select name="background" required>
-            <option value="">Select</option>
-            <option>Business owner</option>
-            <option>F&amp;B / restaurant industry</option>
-            <option>Working professional</option>
-            <option>Existing franchise partner</option>
-            <option>Other</option>
-          </select>
-        </label>
+        <fieldset class="q">
+          <legend>When are you planning to start your franchise?<small>Select all that apply</small></legend>
+          <div class="choices">
+            <label class="choice"><input type="checkbox" name="timeline" value="Immediately">Immediately</label>
+            <label class="choice"><input type="checkbox" name="timeline" value="Within 3 Months">Within 3 Months</label>
+            <label class="choice"><input type="checkbox" name="timeline" value="Within 6 Months">Within 6 Months</label>
+            <label class="choice"><input type="checkbox" name="timeline" value="Just Exploring">Just Exploring</label>
+          </div>
+        </fieldset>
+
+        <fieldset class="q">
+          <legend>Why are you exploring this opportunity?<small>Select all that apply</small></legend>
+          <div class="choices">
+            <label class="choice"><input type="checkbox" name="reason" value="Start a New Business">Start a New Business</label>
+            <label class="choice"><input type="checkbox" name="reason" value="Expand My Existing Business">Expand My Existing Business</label>
+            <label class="choice"><input type="checkbox" name="reason" value="Enter the F&amp;B Industry">Enter the F&amp;B Industry</label>
+            <label class="choice"><input type="checkbox" name="reason" value="Explore Franchise Opportunities">Explore Franchise Opportunities</label>
+            <label class="choice"><input type="checkbox" name="reason" value="Still Evaluating Options">Still Evaluating Options</label>
+          </div>
+        </fieldset>
+
+        <fieldset class="q">
+          <legend>How would you like to proceed?<small>Select all that apply</small></legend>
+          <div class="choices">
+            <label class="choice"><input type="checkbox" name="next_step" value="Schedule Presentation">Schedule Presentation</label>
+            <label class="choice"><input type="checkbox" name="next_step" value="Send Opportunity Deck">Send Opportunity Deck</label>
+            <label class="choice"><input type="checkbox" name="next_step" value="WhatsApp Details">WhatsApp Details</label>
+            <label class="choice"><input type="checkbox" name="next_step" value="Request a Call">Request a Call</label>
+            <label class="choice"><input type="checkbox" name="next_step" value="Need More Info">Need More Info</label>
+          </div>
+        </fieldset>
 
         <p class="error" id="error2" hidden></p>
         <div class="actions">
@@ -338,7 +360,7 @@
   // Returns true if every required control in the step is valid; marks the invalid ones
   function validate(step, errorEl, message) {
     let firstInvalid = null;
-    step.querySelectorAll("input:not([type=radio]), select").forEach(function (el) {
+    step.querySelectorAll("input:not([type=checkbox]), select").forEach(function (el) {
       el.value = el.value.trim();
       const ok = el.checkValidity();
       el.classList.toggle("is-invalid", !ok);
@@ -379,9 +401,14 @@
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
     const error2 = document.getElementById("error2");
-    if (!validate(steps[1], error2, "Please answer all the questions above.")) return;
+    if (!validate(steps[1], error2, "Please choose at least one option for each question.")) return;
 
-    const data = Object.fromEntries(new FormData(form).entries());
+    // Multi-select questions are sent as arrays
+    const data = {};
+    new FormData(form).forEach(function (value, key) {
+      if (form.querySelector('input[type=checkbox][name="' + key + '"]')) (data[key] = data[key] || []).push(value);
+      else data[key] = value;
+    });
     data.source = "Natuf FICO franchise Meta ad form";
     data.page = window.location.href;
 
