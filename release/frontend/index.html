@@ -98,7 +98,7 @@
     display: grid; grid-template-columns: 1fr 1fr;
     border-top: 1px solid rgba(243, 215, 156, .3);
   }
-  .stat { padding: 16px 14px 18px; text-align: center; }
+  .stat { padding: 16px 8px 18px; text-align: center; min-width: 0; }
   .stat + .stat { border-left: 1px solid rgba(243, 215, 156, .3); }
   .stat__label {
     display: block; min-height: 2.6em;
@@ -107,7 +107,7 @@
   }
   .stat strong {
     display: block; margin-top: 6px;
-    font-family: var(--font-head); font-size: 22px; font-weight: 400; line-height: 1.15; white-space: nowrap;
+    font-family: var(--font-head); font-size: clamp(17px, 5vw, 22px); font-weight: 400; line-height: 1.15; white-space: nowrap;
     color: var(--gold-light);
   }
   .stat sup { font-size: 13px; }
