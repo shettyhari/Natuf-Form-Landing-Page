@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Apply | Natuf Franchise</title>
+<meta name="description" content="Apply to become a Natuf franchise partner. FICO model: Franchise Invested, Company Operated.">
+<meta name="theme-color" content="#fdf0d4">
+<link rel="icon" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap">
+
+<!-- Meta Pixel ID and the lead endpoint are set in config.js -->
+
+<style>
+  :root {
+    --ink: #1b1a14;
+    --green: #10472a;
+    --green-deep: #0a3520;
+    --rust: #873d2a;
+    --cream: #fdf0d4;
+    --cream-light: #fff8e8;
+    --paper: #ffffff;
+    --muted: #6a6457;
+    --line: #e8dcc0;
+    --gold-light: #f3d79c;
+    --error: #b3261e;
+    --font-head: "Young Serif", Georgia, serif;
+    --font-body: "DM Sans", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--cream); }
+  body {
+    font-family: var(--font-body);
+    color: var(--ink);
+    min-height: 100dvh;
+    display: flex;
+    justify-content: center;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .sheet {
+    width: 100%;
+    max-width: 480px;
+    min-height: 100dvh;
+    background: var(--paper);
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 40px rgba(16, 71, 42, .08);
+  }
+
+  /* Progress bar, as on Meta instant forms */
+  .progress { height: 4px; background: var(--line); }
+  .progress__bar { height: 100%; width: 50%; background: var(--green); transition: width .3s ease; }
+
+  /* Brand header */
+  .brand {
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    padding: 18px 20px 14px;
+    background: var(--cream-light);
+    border-bottom: 1px solid var(--line);
+  }
+  .brand__logo { display: block; height: 58px; width: auto; }
+  .brand__sub { font-size: 12px; color: var(--muted); letter-spacing: .02em; text-align: center; }
+
+  form { flex: 1; display: flex; flex-direction: column; }
+  form[hidden] { display: none; }
+  .step { flex: 1; display: flex; flex-direction: column; padding: 22px 20px 24px; }
+  .step[hidden] { display: none; }
+
+  /* Brand banner with key figures */
+  .hero {
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--green-deep);
+    border: 1px solid rgba(243, 215, 156, .4);
+    box-shadow: 0 14px 34px rgba(16, 71, 42, .2);
+  }
+  /* Fixed aspect ratio so the same crop shows at every screen width */
+  .hero__media { position: relative; aspect-ratio: 515 / 430; }
+  .hero__img {
+    display: block; width: 100%; height: 100%;
+    object-fit: cover; object-position: center;
+  }
+  .hero__media::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(10, 53, 32, 0) 78%, var(--green-deep) 100%);
+  }
+  .hero__overlay { padding: 2px 18px 14px; text-align: center; }
+  .hero__eyebrow {
+    font-size: 9.5px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase;
+    color: var(--gold-light);
+  }
+  .hero__caption { font-size: 12px; color: #e8efe6; margin-top: 3px; }
+  .hero__stats {
+    display: grid; grid-template-columns: 1fr 1fr;
+    border-top: 1px solid rgba(243, 215, 156, .3);
+  }
+  .stat { padding: 16px 14px 18px; text-align: center; }
+  .stat + .stat { border-left: 1px solid rgba(243, 215, 156, .3); }
+  .stat__label {
+    display: block; min-height: 2.6em;
+    font-size: 9.5px; font-weight: 700; letter-spacing: .14em; line-height: 1.3; text-transform: uppercase;
+    color: #a9bfae;
+  }
+  .stat strong {
+    display: block; margin-top: 6px;
+    font-family: var(--font-head); font-size: 22px; font-weight: 400; line-height: 1.15; white-space: nowrap;
+    color: var(--gold-light);
+  }
+  .stat sup { font-size: 13px; }
+  .stat__sub { display: block; font-size: 11px; color: #e8efe6; margin-top: 4px; }
+  .hero__note { font-size: 10.5px; color: var(--muted); line-height: 1.45; margin: 10px 2px 24px; }
+
+  .step__title { font-family: var(--font-head); font-size: 23px; font-weight: 400; line-height: 1.25; margin-bottom: 6px; color: var(--green); }
+  .step__intro { font-size: 13.5px; color: var(--muted); line-height: 1.5; margin-bottom: 22px; }
+
+  .field { display: block; margin-bottom: 18px; }
+  .field > span { display: block; font-size: 13px; font-weight: 500; margin-bottom: 6px; }
+  .field input, .field select {
+    width: 100%;
+    font: inherit; font-size: 16px; /* 16px stops iOS zooming on focus */
+    color: var(--ink);
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--paper);
+    appearance: none; -webkit-appearance: none;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  .field select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236a6457' stroke-width='1.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 14px center;
+    padding-right: 38px;
+  }
+  .field input:focus, .field select:focus {
+    outline: none; border-color: var(--green); box-shadow: 0 0 0 3px rgba(16, 71, 42, .15);
+  }
+  .field input.is-invalid, .field select.is-invalid { border-color: var(--error); }
+
+  /* Radio-style choices for the questions step */
+  .q { border: 0; margin-bottom: 20px; }
+  .q legend { font-size: 14px; font-weight: 500; margin-bottom: 10px; }
+  .q.is-invalid legend { color: var(--error); }
+  .choice {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 14px; margin-bottom: 8px;
+    border: 1px solid var(--line); border-radius: 10px;
+    font-size: 14.5px; cursor: pointer;
+    transition: border-color .15s, background .15s;
+  }
+  .choice input { accent-color: var(--green); width: 18px; height: 18px; flex-shrink: 0; }
+  .choice:has(input:checked) { border-color: var(--green); background: var(--cream-light); }
+  .choice__text { flex: 1; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+  .choice__text small { font-size: 12px; color: var(--muted); }
+  .choice__text em { font-style: normal; font-weight: 600; color: var(--rust); white-space: nowrap; }
+
+  .error { color: var(--error); font-size: 13px; margin: -6px 0 14px; }
+
+  .actions { margin-top: auto; padding-top: 8px; display: flex; gap: 10px; }
+  .btn {
+    flex: 1;
+    font: inherit; font-size: 15px; font-weight: 600;
+    padding: 14px 18px;
+    border-radius: 10px; border: 0; cursor: pointer;
+    background: var(--green); color: #fff;
+    transition: background .15s;
+  }
+  .btn:hover { background: var(--green-deep); }
+  .btn:disabled { opacity: .6; cursor: default; }
+  .btn--ghost { flex: 0 0 auto; background: transparent; color: var(--ink); border: 1px solid var(--line); }
+  .btn--ghost:hover { background: var(--cream-light); }
+
+  .privacy { font-size: 11.5px; color: var(--muted); line-height: 1.5; text-align: center; margin-top: 14px; }
+
+  /* Thank-you screen */
+  .done { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px 28px; }
+  .done[hidden] { display: none; }
+  .done__icon {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: var(--cream); color: var(--green);
+    display: grid; place-items: center; margin-bottom: 20px;
+  }
+  .done h2 { font-family: var(--font-head); font-size: 24px; font-weight: 400; color: var(--green); margin-bottom: 10px; }
+  .done p { font-size: 14px; color: var(--muted); line-height: 1.6; max-width: 320px; }
+</style>
+</head>
+<body>
+  <main class="sheet">
+    <div class="progress" aria-hidden="true"><div class="progress__bar" id="progressBar"></div></div>
+
+    <header class="brand">
+      <img class="brand__logo" src="images/Logo.png" alt="Natuf, Truly Levantine" width="520" height="193">
+      <div class="brand__sub">FICO Franchise Opportunity · Pan India · Brand by EBG Group</div>
+    </header>
+
+    <form id="leadForm" novalidate>
+      <!-- Step 1: contact details -->
+      <section class="step" data-step="1">
+        <div class="hero">
+          <div class="hero__media">
+            <img class="hero__img" src="images/hero.jpg" alt="Natuf cafe retail shelf with Turkish coffee, tahini, cookies and gift boxes" width="1030" height="860">
+          </div>
+          <div class="hero__overlay">
+            <div class="hero__eyebrow">Franchise Invested · Company Operated</div>
+            <div class="hero__caption">Natuf · Born in the Levant. Made for India.</div>
+          </div>
+          <div class="hero__stats">
+            <div class="stat">
+              <span class="stat__label">Capital contribution</span>
+              <strong>₹35L – ₹1.25 Cr</strong>
+              <span class="stat__sub">4 formats · 5-year tenure</span>
+            </div>
+            <div class="stat">
+              <span class="stat__label">Minimum payout protection</span>
+              <strong>₹70K – ₹2.5L<sup>*</sup></strong>
+              <span class="stat__sub">per month, by format</span>
+            </div>
+          </div>
+        </div>
+        <p class="hero__note">*Monthly minimum payout protection (2% of capital contribution), or 15% of net revenue, as per the franchise agreement. Figures are indicative and vary by format, city and site.</p>
+
+        <h1 class="step__title">Apply for a Natuf Franchise</h1>
+        <p class="step__intro">Fill in your details and a Natuf franchise advisor will reach out within 24 hours.</p>
+
+        <label class="field">
+          <span>Full name</span>
+          <input type="text" name="name" autocomplete="name" required>
+        </label>
+        <label class="field">
+          <span>Phone number</span>
+          <input type="tel" name="phone" inputmode="tel" autocomplete="tel" placeholder="+91" pattern="[+0-9\s\-]{10,15}" required>
+        </label>
+        <label class="field">
+          <span>Email</span>
+          <input type="email" name="email" autocomplete="email" required>
+        </label>
+        <label class="field">
+          <span>City / State</span>
+          <input type="text" name="city" autocomplete="address-level2" placeholder="e.g. Bengaluru, Karnataka" required>
+        </label>
+
+        <p class="error" id="error1" hidden></p>
+        <div class="actions">
+          <button type="button" class="btn" id="nextBtn">Next</button>
+        </div>
+      </section>
+
+      <!-- Step 2: qualifying questions -->
+      <section class="step" data-step="2" hidden>
+        <h1 class="step__title">A few quick questions</h1>
+        <p class="step__intro">This helps your advisor prepare the right format and plan for you.</p>
+
+        <fieldset class="q">
+          <legend>Preferred format &amp; capital contribution</legend>
+          <label class="choice"><input type="radio" name="format" value="Kiosk (100–200 sft) · ₹35L" required><span class="choice__text"><span>Kiosk<br><small>100–200 sft</small></span><em>₹35L</em></span></label>
+          <label class="choice"><input type="radio" name="format" value="Express Cafe (200–500 sft) · ₹55L"><span class="choice__text"><span>Express Cafe<br><small>200–500 sft</small></span><em>₹55L</em></span></label>
+          <label class="choice"><input type="radio" name="format" value="Flagship Cafe (500–800 sft) · ₹85L"><span class="choice__text"><span>Flagship Cafe<br><small>500–800 sft</small></span><em>₹85L</em></span></label>
+          <label class="choice"><input type="radio" name="format" value="Signature Cafe (800–1500 sft) · ₹1.25 Cr"><span class="choice__text"><span>Signature Cafe<br><small>800–1500 sft</small></span><em>₹1.25 Cr</em></span></label>
+          <label class="choice"><input type="radio" name="format" value="Not sure yet"><span class="choice__text"><span>Not sure yet, advise me</span></span></label>
+        </fieldset>
+
+        <label class="field">
+          <span>Timeline to start</span>
+          <select name="timeline" required>
+            <option value="">Select</option>
+            <option>Immediately</option>
+            <option>Within 3 months</option>
+            <option>3–6 months</option>
+            <option>6+ months</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>Business background</span>
+          <select name="background" required>
+            <option value="">Select</option>
+            <option>Business owner</option>
+            <option>F&amp;B / restaurant industry</option>
+            <option>Working professional</option>
+            <option>Existing franchise partner</option>
+            <option>Other</option>
+          </select>
+        </label>
+
+        <p class="error" id="error2" hidden></p>
+        <div class="actions">
+          <button type="button" class="btn btn--ghost" id="backBtn" aria-label="Back">Back</button>
+          <button type="submit" class="btn" id="submitBtn">Submit</button>
+        </div>
+        <p class="privacy">By submitting, you agree that Natuf (EBG Group) may contact you about this franchise enquiry by phone, WhatsApp or email.</p>
+      </section>
+    </form>
+
+    <!-- Thank-you screen -->
+    <section class="done" id="done" hidden>
+      <div class="done__icon" aria-hidden="true">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+      </div>
+      <h2 id="doneTitle">Thank you!</h2>
+      <p>Your application has been received. A Natuf franchise advisor will contact you within 24 hours.</p>
+    </section>
+  </main>
+
+<script src="config.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  // Settings live in config.js (see that file). While formEndpoint is "" leads are NOT sent anywhere.
+  const config = window.NATUF_CONFIG || {};
+  const FORM_ENDPOINT = config.formEndpoint || "";
+  const META_PIXEL_ID = config.metaPixelId || "";
+
+  if (META_PIXEL_ID) {
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq("init", META_PIXEL_ID);
+    fbq("track", "PageView");
+  }
+
+  const form = document.getElementById("leadForm");
+  const steps = form.querySelectorAll(".step");
+  const progressBar = document.getElementById("progressBar");
+  const submitBtn = document.getElementById("submitBtn");
+
+  function showStep(n) {
+    steps.forEach(function (s) { s.hidden = s.dataset.step !== String(n); });
+    progressBar.style.width = n === 1 ? "50%" : "90%";
+    window.scrollTo(0, 0);
+  }
+
+  // Returns true if every required control in the step is valid; marks the invalid ones
+  function validate(step, errorEl, message) {
+    let firstInvalid = null;
+    step.querySelectorAll("input:not([type=radio]), select").forEach(function (el) {
+      el.value = el.value.trim();
+      const ok = el.checkValidity();
+      el.classList.toggle("is-invalid", !ok);
+      if (!ok && !firstInvalid) firstInvalid = el;
+    });
+    step.querySelectorAll("fieldset.q").forEach(function (fs) {
+      const ok = !!fs.querySelector("input:checked");
+      fs.classList.toggle("is-invalid", !ok);
+      if (!ok && !firstInvalid) firstInvalid = fs.querySelector("input");
+    });
+    errorEl.hidden = !firstInvalid;
+    if (firstInvalid) {
+      errorEl.textContent = message;
+      firstInvalid.focus();
+    }
+    return !firstInvalid;
+  }
+
+  document.getElementById("nextBtn").addEventListener("click", function () {
+    if (validate(steps[0], document.getElementById("error1"),
+        "Please enter your name, a valid phone number, email and city.")) {
+      showStep(2);
+    }
+  });
+  document.getElementById("backBtn").addEventListener("click", function () { showStep(1); });
+
+  // Enter on step 1 moves to step 2 instead of submitting
+  steps[0].addEventListener("keydown", function (e) {
+    if (e.key === "Enter") { e.preventDefault(); document.getElementById("nextBtn").click(); }
+  });
+
+  form.addEventListener("input", function (e) {
+    e.target.classList.remove("is-invalid");
+    const fs = e.target.closest("fieldset.q");
+    if (fs) fs.classList.remove("is-invalid");
+  });
+
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    const error2 = document.getElementById("error2");
+    if (!validate(steps[1], error2, "Please answer all the questions above.")) return;
+
+    const data = Object.fromEntries(new FormData(form).entries());
+    data.source = "Natuf FICO franchise Meta ad form";
+    data.page = window.location.href;
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Submitting…";
+    try {
+      if (FORM_ENDPOINT) {
+        const res = await fetch(FORM_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
+        if (!res.ok) throw new Error("Request failed: " + res.status);
+      } else {
+        console.warn("FORM_ENDPOINT is not set: lead was not sent.", data);
+      }
+      if (window.fbq) fbq("track", "Lead");
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ event: "lead_form_submit" });
+
+      const firstName = (data.name || "").split(" ")[0];
+      if (firstName) document.getElementById("doneTitle").textContent = "Thank you, " + firstName + "!";
+      form.hidden = true;
+      document.getElementById("done").hidden = false;
+      progressBar.style.width = "100%";
+      window.scrollTo(0, 0);
+    } catch (err) {
+      error2.textContent = "Something went wrong. Please try again in a moment.";
+      error2.hidden = false;
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Submit";
+    }
+  });
+})();
+</script>
+</body>
+</html>
